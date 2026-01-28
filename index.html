@@ -48,7 +48,7 @@
 
     body {
       font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: linear-gradient(135deg, var(--bg-dark) 0%, #0a0f1f 50%, var(--bg-darker) 100%);
+      background: var(--bg-dark);
       color: var(--text-secondary);
       line-height: 1.6;
       overflow-x: hidden;
@@ -69,34 +69,41 @@
       touch-action: manipulation;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 40% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* Subtle premium noise + grid */
-    body::after {
-      content: "";
+    /* Robust background layer (fixes iOS Safari oddities) */
+    .site-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #0a0f1f 50%, var(--bg-darker) 100%);
+    }
+
+    .site-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+    }
+
+    /* Subtle premium grid */
+    .site-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
       opacity: 0.07;
       background-image:
         linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 90px 90px;
       mask-image: radial-gradient(circle at 30% 10%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%);
+    }
+
+    /* Ensure content is above the background layer */
+    header, section, footer, nav {
+      z-index: 1;
     }
 
     a:focus-visible,
@@ -656,6 +663,7 @@
       border-top: 1px solid var(--border-light);
       padding: 60px 20px 40px;
       text-align: center;
+      position: relative;
     }
 
     .footer-content {
@@ -753,9 +761,7 @@
       }
 
       /* Keep the same "desktop feel" (no harsh overlays) */
-      body::after {
-        opacity: 0;
-      }
+      .site-bg::after { opacity: 0; }
 
       header::after {
         width: 420px;
@@ -907,6 +913,7 @@
 <body>
 
 <a class="skip-link" href="#about">Skip to content</a>
+<div class="site-bg" aria-hidden="true"></div>
 
 <!-- ===== NAVIGATION ===== -->
 <nav id="site-nav">
