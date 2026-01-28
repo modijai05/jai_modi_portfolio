@@ -752,6 +752,19 @@
         min-height: 100svh;
       }
 
+      /* Keep the same "desktop feel" (no harsh overlays) */
+      body::after {
+        opacity: 0;
+      }
+
+      header::after {
+        width: 420px;
+        height: 420px;
+        top: -40%;
+        right: -35%;
+        opacity: 0.12;
+      }
+
       .hero {
         grid-template-columns: 1fr;
         gap: 50px;
@@ -766,13 +779,15 @@
       }
 
       .cta-group {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
       }
 
       .cta {
-        width: 100%;
+        width: auto;
         justify-content: center;
+        padding: 14px 18px;
       }
 
       .nav-toggle { display: inline-flex; }
@@ -839,7 +854,7 @@
       .nav-inner { padding: 12px 14px; }
       nav ul { left: 14px; right: 14px; }
       .hero-description { font-size: 1rem; }
-      .cta { padding: 14px 18px; }
+      .cta { padding: 13px 16px; }
       .hero-image-wrapper { max-width: 320px; }
       .project-image { height: 200px; }
     }
@@ -1194,7 +1209,7 @@
         <i class="fab fa-twitter"></i>
       </a>
     </div>
-    <p>© 2026 Jai Modi. All rights reserved.</p>
+    <p>© 2026 Jai Modi. All rights reserved. | Crafted with precision and creativity</p>
   </div>
 </footer>
 
@@ -1305,4 +1320,3 @@
 
 </body>
 </html>
-
